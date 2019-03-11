@@ -22,3 +22,8 @@ class RestCountriesManager:
 	def getCountriesByRegion(self, region):
 		searchQuery= self.API_PATH +'/region/'+ region
 		return self.query(searchQuery)
+
+	def getAll(self):
+		searchQuery = self.API_PATH + '/all'
+		return self.query(searchQuery) 
+
