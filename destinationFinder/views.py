@@ -3,6 +3,7 @@ from destinationFinder.managers import RestCountriesManager
 from django.http import HttpResponse
 import requests
 
+
 # Create your views here.
 def index(request):
 	countryDictionary = dict()
@@ -11,6 +12,7 @@ def index(request):
 	for dataItem in data:
 		countryDictionary[dataItem['alpha3Code']] = dataItem['name']
 	countryTuple = list(countryDictionary.items())
-	return HttpResponse(countryTuple)
+
+	return render(request, 'destinationFinder/index.html',{'countryTuple': countryTuple})
 
 
