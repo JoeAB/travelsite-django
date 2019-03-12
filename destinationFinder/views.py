@@ -2,7 +2,7 @@ from django.shortcuts import render
 from destinationFinder.managers import RestCountriesManager
 from django.http import HttpResponse
 import requests
-
+import json
 
 # Create your views here.
 def index(request):
@@ -15,4 +15,8 @@ def index(request):
 
 	return render(request, 'destinationFinder/index.html',{'countryTuple': countryTuple})
 
-
+def details(request, countryID):
+	countyManager = RestCountriesManager()
+	countryDetails = countyManager.getByCountryCode(countryID)
+	#return HttpResponse(json.dumps(countryDetails))
+	return render(request, 'destinationFinder/details.html', {'countryDetails':countryDetails})
