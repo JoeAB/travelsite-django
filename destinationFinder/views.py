@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from destinationFinder.managers import RestCountriesManager
+from destinationFinder.managers import RestCountriesManager, RestCurrencyManager
 from django.http import HttpResponse
 import requests
 import json
+
 
 # Create your views here.
 def index(request):
@@ -17,6 +18,11 @@ def index(request):
 
 def details(request, countryID):
 	countyManager = RestCountriesManager()
+	currencyManager = RestCurrencyManager()
+	exchangeDict = dict()
 	countryDetails = countyManager.getByCountryCode(countryID)
-	#return HttpResponse(json.dumps(countryDetails))
-	return render(request, 'destinationFinder/details.html', {'countryDetails':countryDetails})
+	exchangeRates = currencyManager.getExchangeRates()
+	exchangeDict['USD'] = exchangeRates['rates']['USD']
+	exchangeDict['EUR'] = exchangeRates['rates']['EUR']
+	exchangeDict[countryDetails['currencies'][0]['code']] = exchangeRates['rates'][countryDetails['currencies'][0]['code']]
+	return render(request, 'destinationFinder/details.html', {'countryDetails':countryDetails, 'exchangeDict': exchangeDict })

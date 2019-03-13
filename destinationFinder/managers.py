@@ -1,4 +1,6 @@
 import requests
+import os
+import json
 
 class RestCountriesManager:
 
@@ -27,3 +29,23 @@ class RestCountriesManager:
 		searchQuery = self.API_PATH + '/all'
 		return self.query(searchQuery) 
 
+class RestCurrencyManager:
+
+	API_PATH = 'http://data.fixer.io/api/'
+
+	def __init__(self):
+		dirName = os.path.dirname(__file__)
+		filename = os.path.join(dirName, 'config.js')
+		with open(filename) as data_file:
+			self.key = json.load(data_file)['key']
+
+	def query(self, requestString):
+		response = requests.get(requestString)
+		if response.status_code == 200:
+			return response.json()
+		else:
+			return response.status_code
+
+	def getExchangeRates(self):
+		path = self.API_PATH + 'latest?access_key='+self.key
+		return self.query(path)

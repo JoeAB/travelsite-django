@@ -1,4 +1,10 @@
 <h1>{{countryDetails.name}}</h1>
 <h3>Capital City : {{countryDetails.capital}}</h3>
 <h3>Region: {{countryDetails.region}}</h3>
+<h3>Currency Rates</h3>
+<h4>
+{% for key, value in exchangeDict.items %}
+	<span>{{key}}: {{value}} </span>
+{% endfor %}
+</h4>
 <img src="{{countryDetails.flag}}" />
