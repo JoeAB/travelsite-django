@@ -19,10 +19,7 @@ def index(request):
 def details(request, countryID):
 	countyManager = RestCountriesManager()
 	currencyManager = RestCurrencyManager()
-	exchangeDict = dict()
 	countryDetails = countyManager.getByCountryCode(countryID)
-	exchangeRates = currencyManager.getExchangeRates()
-	exchangeDict['USD'] = exchangeRates['rates']['USD']
-	exchangeDict['EUR'] = exchangeRates['rates']['EUR']
-	exchangeDict[countryDetails['currencies'][0]['code']] = exchangeRates['rates'][countryDetails['currencies'][0]['code']]
+	exchangeDict = currencyManager.getExchangeRates(countryDetails['currencies'][0]['code'])
+
 	return render(request, 'destinationFinder/details.html', {'countryDetails':countryDetails, 'exchangeDict': exchangeDict })

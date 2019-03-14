@@ -39,13 +39,19 @@ class RestCurrencyManager:
 		with open(filename) as data_file:
 			self.key = json.load(data_file)['key']
 
-	def query(self, requestString):
-		response = requests.get(requestString)
-		if response.status_code == 200:
-			return response.json()
-		else:
-			return response.status_code
 
-	def getExchangeRates(self):
+	def getExchangeRates(self, code):
 		path = self.API_PATH + 'latest?access_key='+self.key
-		return self.query(path)
+		response = requests.get(path)
+		if response.status_code != 200:
+			return {"Error" : "Currency data not currently available."}
+		data = response.json()
+		exchangeDict = dict()
+		exchangeDict['USD'] = data['rates']['USD']
+		exchangeDict['EUR'] = data['rates']['EUR']
+		exchangeDict[code] = data['rates'][code]
+		return exchangeDict
+
+
+
+
