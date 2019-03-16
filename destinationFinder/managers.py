@@ -11,7 +11,8 @@ class RestCountriesManager:
 		if response.status_code == 200:
 			return response.json()
 		else:
-			return response.status_code
+			#if we fail for any reason, we want an exception
+			raise Exception("Failure getting data from REST endpoint")
 
 	def searchByName(self, nameQuery):
 		searchQuery= self.API_PATH +'/name/'+nameQuery
