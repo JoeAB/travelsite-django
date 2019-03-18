@@ -16,6 +16,7 @@ class CountryDetails(models.Model):
 	subregion = models.TextField(max_length=150)
 	#integer should be fine unless we have a massive populaton boom or alien settlers
 	population = models.IntegerField()
+	flag_url = models.TextField(null=True)
 
 class Currency(models.Model):
 	countries = models.ManyToManyField('CountryDetails', blank=True)
@@ -43,7 +44,7 @@ class BlogPost(models.Model):
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	topic_country = models.ForeignKey(Country, on_delete=models.CASCADE)
 	#topic city should be optional in the case of general country level postss
-	topic_city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+	topic_city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
 	title = models.TextField(max_length=150)
 	text = models.TextField()
 	created_date = models.DateTimeField()

@@ -33,7 +33,31 @@ class CountryDetailsTests(TestCase):
 		try:
 			country = newCountry()
 			countryDetails = newCountryDetails(country)
-			testCountry = CountryDetails.objects.get(country__name="My new empire")
+			testCountryDetails = CountryDetails.objects.get(country__name="My new empire")
+		except Exception as e:
+			self.fail(e)
+	def test_remove_valid(self):
+		try:
+			country = newCountry()
+			countryDetails = newCountryDetails(country)
+			countryDetails.delete()
+			testCountryDetails = CountryDetails.objects.get(country__name="My new empire")
+			self.fail("Country details not deleted")
+		except ObjectDoesNotExist:
+			pass
+		#any other error we should fail, since something is wrong
+		except Exception as e:
+			self.fail(e)
+	def test_remove_cascade_valid(self):
+		try:
+			country = newCountry()
+			countryDetails = newCountryDetails(country)
+			country.delete()
+			testCountryDetails = CountryDetails.objects.get(id=countryDetails.id)
+			self.fail("Country details not deleted")
+		except ObjectDoesNotExist:
+			pass
+		#any other error we should fail, since something is wrong
 		except Exception as e:
 			self.fail(e)
 
@@ -52,6 +76,32 @@ class BlogPostTests(TestCase):
 			testPost = BlogPost.objects.get(title="yaba da ba ding dong")
 		except Exception as e:
 			self.fail(e)
+	def test_remove_valid(self):
+		try:
+			user = newTestUser()
+			country = newCountry()
+			post = newBlogPost(user, country)
+			post.delete()
+			testPost = BlogPost.objects.get(title="yaba da ba ding dong")			
+			self.fail("Blog post not deleted")
+		except ObjectDoesNotExist:
+			pass
+		#any other error we should fail, since something is wrong
+		except Exception as e:
+			self.fail(e)
+	def test_remove_cascade_country_valid(self):
+		try:
+			user = newTestUser()
+			country = newCountry()
+			post = newBlogPost(user, country)
+			country.delete()
+			testPost = BlogPost.objects.get(title="yaba da ba ding dong")		
+			self.fail("Blog post not deleted")
+		except ObjectDoesNotExist:
+			pass
+		#any other error we should fail, since something is wrong
+		except Exception as e:
+			self.fail(e)
 
 #class BlogCommentTests(TestCase):
 
@@ -61,7 +111,7 @@ class RestCountriesManagerTest(TestCase):
 	def test_getAll(self):
 		try:
 			manager = RestCountriesManager()
-			results = manager.getAll()
+			#results = manager.getAll()
 		except Exception as e:
 			self.fail(e)
 
