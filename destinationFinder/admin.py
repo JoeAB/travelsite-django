@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import Country, CountryDetails, Currency, Language
 
-# Register your models here.
+
+admin.site.register(Country)
+admin.site.register(CountryDetails)
+admin.site.register(Currency)
+admin.site.register(Language)

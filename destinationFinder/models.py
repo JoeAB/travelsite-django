@@ -6,6 +6,8 @@ class Country(models.Model):
 	name = models.TextField()
 	country_code_alpha2 = models.CharField(max_length=3)
 	country_code_alpha3 = models.CharField(max_length=3)
+	def __str__(self):
+		return self.name
 
 #split this out from country so we don't construct all this when showing our list page
 class CountryDetails(models.Model):
@@ -17,18 +19,25 @@ class CountryDetails(models.Model):
 	#integer should be fine unless we have a massive populaton boom or alien settlers
 	population = models.IntegerField()
 	flag_url = models.TextField(null=True)
+	def __str__(self):
+		return self.country.name
+	
 
 class Currency(models.Model):
 	countries = models.ManyToManyField('CountryDetails', blank=True)
 	name = models.TextField(max_length=150)
 	code = models.CharField(max_length=3)
-	symbol = models.CharField(max_length=250)
+	symbol = models.CharField(max_length=250, blank=True, null = True)
+	def __str__(self):
+		return self.name
 
 class Language(models.Model):
 	countries = models.ManyToManyField('CountryDetails', blank=True)
 	name = models.TextField(max_length=150)
 	iso639_1 = models.CharField(max_length=2)
 	iso639_2 = models.CharField(max_length=2)
+	def __str__(self):
+		return self.name
 
 class City(models.Model):
 	country = models.ForeignKey(Country, on_delete=models.CASCADE)
