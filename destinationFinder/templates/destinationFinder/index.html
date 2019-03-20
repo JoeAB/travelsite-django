@@ -1,6 +1,6 @@
 
 <ul>
-{% for id, name in countryTuple %}
-	<li><a id="{{id}}" href="destinationFinder/details/{{id}}">{{name}}</a></li>
+{% for country in countries %}
+	<li><a id="{{country.id}}" href="destinationFinder/details/{{country.id}}">{{country.name}}</a></li>
 {% endfor %}
 </ul>

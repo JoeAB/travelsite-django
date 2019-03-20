@@ -1,10 +1,18 @@
-<h1>{{countryDetails.name}}</h1>
-<h3>Capital City : {{countryDetails.capital}}</h3>
+<h1>{{country.name}}</h1>
 <h3>Region: {{countryDetails.region}}</h3>
-<h3>Currency Rates</h3>
-<h4>
-{% for key, value in exchangeDict.items %}
-	<span>{{key}}: {{value}} </span>
+<h3>Population: {{countryDetails.population}}</h3>
+<h3>Languages</h3>
+{% for key, value in languageDict.items %}
+<h5>
+	<span>{{key}}</span>
+</h5>
 {% endfor %}
-</h4>
-<img src="{{countryDetails.flag}}" />
+<h3>Currencies</h3>
+{% for key, value in currencyDict.items %}
+	<h4>{{key}}</h4>
+	{% for innerKey, innervalue in value.items %}
+		<span>{{innerKey}}: {{innervalue}} </span>
+	{% endfor %}
+{% endfor %}
+<br />
+<img src="{{countryDetails.flag_url}}" />

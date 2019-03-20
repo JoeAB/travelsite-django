@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 
+
 class Country(models.Model):
 	name = models.TextField()
 	country_code_alpha2 = models.CharField(max_length=3)

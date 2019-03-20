@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from destinationFinder.managers import RestCountriesManager, RestCurrencyManager
+from .managers import RestCountriesManager, RestCurrencyManager
+from .models import Country, CountryDetails, Currency, Language, City
 from django.http import HttpResponse
 import requests
 import json
@@ -7,19 +8,19 @@ import json
 
 # Create your views here.
 def index(request):
-	countryDictionary = dict()
-	countyManager = RestCountriesManager()
-	data = countyManager.getAll()
-	for dataItem in data:
-		countryDictionary[dataItem['alpha3Code']] = dataItem['name']
-	countryTuple = list(countryDictionary.items())
+	countries = Country.objects.all()
 
-	return render(request, 'destinationFinder/index.html',{'countryTuple': countryTuple})
+	return render(request, 'destinationFinder/index.html',{'countries': countries})
 
 def details(request, countryID):
-	countyManager = RestCountriesManager()
+	country = Country.objects.get(id=countryID)
+	countryDetails = CountryDetails.objects.get(country__id=countryID)
+	currencyDict = {}
+	languageDict = {}
 	currencyManager = RestCurrencyManager()
-	countryDetails = countyManager.getByCountryCode(countryID)
-	exchangeDict = currencyManager.getExchangeRates(countryDetails['currencies'][0]['code'])
+	for currencyValue in countryDetails.currencies.all():
+		currencyDict[currencyValue.name] = currencyManager.getExchangeRates(currencyValue.code)
+	for languageValue in countryDetails.languages.all():
+		languageDict[languageValue.name] = languageValue.iso639_2
 
-	return render(request, 'destinationFinder/details.html', {'countryDetails':countryDetails, 'exchangeDict': exchangeDict })
+	return render(request, 'destinationFinder/details.html', {'country':country, 'countryDetails':countryDetails, 'currencyDict': currencyDict, 'languageDict' :languageDict })
