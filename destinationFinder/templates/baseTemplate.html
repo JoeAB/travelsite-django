@@ -9,9 +9,21 @@
 	</head>
 	<body>
 		<div class="container">
-			{% block content %}
+			<div class="row" style="border-bottom:2px solid black; background-color:#0099ff;">
+				<h1 style="color:white;">Destination Finder</h1>
+			</div>
+			<div class="row">
+				<div class="col-1" style="border-right:2px solid black">
+					<div class="row">
+						<a href="/destinationFinder">Country List</a>
+					</div>
+				</div>
+				<div class="col-11">
+				{% block content %}
 			
-			{% endblock %}
+				{% endblock %}
+				</div>
+			</div>
 		</div>
 	</body>
 

@@ -1,0 +1,11 @@
+{% extends "baseTemplate.html" %}
+
+{% block content %}
+	<div class="row">
+		<h1>{{post.title}}</h1>
+	</div>
+	<div class="row">
+		<p>{{post.text|linebreaksbr}}</p>
+	</div>
+
+{% endblock %}

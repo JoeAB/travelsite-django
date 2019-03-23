@@ -1,6 +1,11 @@
+{% extends "baseTemplate.html" %}
 
-<ul>
-{% for country in countries %}
-	<li><a id="{{country.id}}" href="destinationFinder/details/{{country.id}}">{{country.name}}</a></li>
-{% endfor %}
-</ul>
+{% block content %}
+	
+	{% for country in countries %}
+		<div class="row">
+			<a id="{{country.id}}" href="destinationFinder/details/{{country.id}}">{{country.name}}</a>
+		</div>
+	{% endfor %}
+
+{% endblock %}

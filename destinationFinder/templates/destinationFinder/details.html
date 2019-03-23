@@ -1,4 +1,5 @@
 {% extends "baseTemplate.html" %}
+{% load humanize %}
 
 {% block content %}
 	<div class="row">
@@ -9,7 +10,7 @@
 			<h3>Region: {{countryDetails.region}}</h3>
 		</div>
 		<div class="col-6">
-			<h3>Population: {{countryDetails.population}}</h3>
+			<h3>Population: {{countryDetails.population|intcomma}}</h3>
 		</div>
 	</div>
 	<div class="row">
@@ -38,7 +39,7 @@
 					</div>
 					<div class="row">
 					{% for innerKey, innervalue in value.items %}
-						<div class="col-3">{{innerKey}}: {{innervalue|floatformat:"2"}}</div>
+						<div class="col">{{innerKey}}: {{innervalue|floatformat:"2"|intcomma}}</div>
 					{% endfor %}
 					</div>
 				{% endfor %}
@@ -49,5 +50,15 @@
 	<div class="row">
 		<img src="{{countryDetails.flag_url}}" style="border:5px solid black;"/>
 	</div>
+	<br />
+	{% if recentPosts %}
+		<div class="row">
+		{% for post in recentPosts %}
+			<div class="col-4">
+				<a href="/destinationFinder/viewPost/{{post.id}}">{{post.title}}</a>
+			</div>
+		{% endfor %}
+		</div>
+	{% endif %}
 
 {% endblock %}
