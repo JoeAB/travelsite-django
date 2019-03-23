@@ -1,18 +1,53 @@
-<h1>{{country.name}}</h1>
-<h3>Region: {{countryDetails.region}}</h3>
-<h3>Population: {{countryDetails.population}}</h3>
-<h3>Languages</h3>
-{% for key, value in languageDict.items %}
-<h5>
-	<span>{{key}}</span>
-</h5>
-{% endfor %}
-<h3>Currencies</h3>
-{% for key, value in currencyDict.items %}
-	<h4>{{key}}</h4>
-	{% for innerKey, innervalue in value.items %}
-		<span>{{innerKey}}: {{innervalue}} </span>
-	{% endfor %}
-{% endfor %}
-<br />
-<img src="{{countryDetails.flag_url}}" />
+{% extends "baseTemplate.html" %}
+
+{% block content %}
+	<div class="row">
+		<h1>{{country.name}}</h1>
+	</div>
+	<div class="row">
+		<div class="col-6">
+			<h3>Region: {{countryDetails.region}}</h3>
+		</div>
+		<div class="col-6">
+			<h3>Population: {{countryDetails.population}}</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6">
+			
+			<h3>Languages</h3>
+			
+			<div class="row">
+			{% for key, value in languageDict.items %}
+				<div class="col-2">
+					<span>{{key}}</span>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+		<div class="col-6">
+			<h3>Currencies</h3>
+			<div class="row">
+				<div class="container">
+				{% for key, value in currencyDict.items %}
+					<div class="row">
+						<h5>{{key}}</h5>
+					</div>
+					<div class="row">
+						<span>Exchange rates</span>
+					</div>
+					<div class="row">
+					{% for innerKey, innervalue in value.items %}
+						<div class="col-3">{{innerKey}}: {{innervalue|floatformat:"2"}}</div>
+					{% endfor %}
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<img src="{{countryDetails.flag_url}}" style="border:5px solid black;"/>
+	</div>
+
+{% endblock %}
